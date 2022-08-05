@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Admin Dashboard
+
+{% endblock %}
+
+
+{% block main %}
+    <h2>My Dashboard</h2>
+    <nav>
+        <a href="/tutorials/add" class="btn btn-primary">Post New Tutorial</a>
+        <a href="/mods/add" class="btn btn-primary">Post New Mod</a>
+    </nav>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <section> 
+                <h3>Draft Tutorials</h3>
+                <div class="d-flex justify-content-center flex-wrap">
+                {% for tut in context.draft_tutorials %}
+                    <div class="card mod-card m-3">
+                        {% if tut.feature_img_url %}
+                            <img src="{{ tut.feature_img_url }}" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-title text-capitalize">{{ tut.title }}</h4>
+                            <div class="btn-group" role="group" aria-label="Mod edit toolbar">
+                                <a href="/tutorial/{{ tut.id }}" class="btn btn-success">View</a>
+                                <a href="/tutorial/edit/{{ tut.id }}" class="btn btn-primary">Edit</a>
+                                <!-- Note onDelete is an AJAX method defined in layout.html's script tag -->
+                                <button type="submit" onclick="onDelete('{{ tut.id }}', '/tutorial/edit/')" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Updated: {{ tut.updated | stime }}
+                            <br/>
+                            Published {{ tut.published | stime }}
+                        </div>            
+                    </div>
+                {% endfor %}
+                {% if context.draft_tutorials|length == 0 %}
+                    No draft tutorials
+                {% endif %}
+                </div>
+            </section>
+            <hr/>
+            <section>
+                <h3>Published Tutorials</h3>
+                <div class="d-flex justify-content-center flex-wrap">
+                    {% for tut in context.published_tutorials %}
+                        <div class="card mod-card m-3">
+                            {% if tut.feature_img_url %}
+                                <img src="{{ tut.feature_img_url }}" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                            {% else %}
+                                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                            {% endif %}
+                            <div class="card-body">
+                                <h4 class="card-title text-capitalize">{{ tut.title }}</h4>
+                                <div class="btn-group" role="group" aria-label="Mod edit toolbar">
+                                    <a href="/tutorial/{{ tut.id }}" class="btn btn-success">View</a>
+                                    <a href="/tutorial/edit/{{ tut.id }}" class="btn btn-primary">Edit</a>
+                                    <!-- Note onDelete is an AJAX method defined in layout.html's script tag -->
+                                    <button type="submit" onclick="onDelete('{{ tut.id }}', '/tutorial/edit/')" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Updated: {{ tut.updated | stime }}
+                                <br/>
+                                Published {{ tut.published | stime }}
+                            </div>            
+                        </div>
+                    {% endfor %}
+                    {% if context.published_tutorials|length == 0 %}
+                        No published tutorials
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+        <div class="col-md-6">     
+            <section>
+                <h3>Draft Mods</h3>
+                <div class="d-flex justify-content-center flex-wrap">
+                {% for mod in context.draft_mods %}
+                    <div class="card mod-card m-3">
+                        {% if mod.feature_img_url %}
+                            <img src="{{ mod.feature_img_url }}" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-title text-capitalize">{{ mod.title }}</h4>
+                            <div class="btn-group" role="group" aria-label="Mod edit toolbar">
+                                <a href="/mod/{{ mod.id }}" class="btn btn-success">View</a>
+                                <a href="/mod/edit/{{ mod.id }}" class="btn btn-primary">Edit</a>
+                                <!-- Note onDelete is an AJAX method defined in layout.html's script tag -->
+                                <button type="submit" onclick="onDelete('{{ mod.id }}', '/mod/edit/')" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Updated: {{ mod.updated | stime }}
+                            <br/>
+                            Published {{ mod.published | stime }}
+                        </div>            
+                    </div>
+                {% endfor %}
+                {% if context.draft_mods|length == 0 %}
+                    No draft mods
+                {% endif %}
+                </div>
+            </section>
+            <hr/>
+            <section>
+                <h3>Published Mods</h3>
+                <div class="d-flex justify-content-center flex-wrap">
+                {% for mod in context.published_mods %}
+                    <div class="card mod-card m-3">
+                        {% if mod.feature_img_url %}
+                            <img src="{{ mod.feature_img_url }}" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-title text-capitalize">{{ mod.title }}</h4>
+                            <div class="btn-group" role="group" aria-label="Mod edit toolbar">
+                                <a href="/mod/{{ mod.id }}" class="btn btn-success">View</a>
+                                <a href="/mod/edit/{{ mod.id }}" class="btn btn-primary">Edit</a>
+                                <!-- Note onDelete is an AJAX method defined in layout.html's script tag -->
+                                <button type="submit" onclick="onDelete('{{ mod.id }}', '/mod/edit/')" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Updated: {{ mod.updated | stime }}
+                            <br/>
+                            Published {{ mod.published | stime }}
+                        </div>            
+                    </div>
+                {% endfor %}
+                {% if context.published_mods|length == 0 %}
+                    No published mods
+                {% endif %}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

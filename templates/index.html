@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Index
+
+{% endblock %}
+
+
+{% block main %}
+<!-- Section adapted from Hero example here: https://getbootstrap.com/docs/5.2/examples/heroes/-->
+<section class="px-5 py-5 text-center">
+    <h1 class="logo-type">
+        <span class="text-success">Simplified</span><span class="text-primary">Modding</span>
+    </h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            Providing free mods, tips, and tutorials for the Sims 4 community since 2021.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="/mods" class="btn btn-primary btn-lg px-4 gap-3">Download Mods</a>
+        <a href="/tutorials" class="btn btn-outline-secondary btn-lg px-4">View Tutorials</a>
+        </div>
+    </div>
+</section>
+<hr />
+<section class="p-5">
+    <h3>Newest Mod Uploads</h3>
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for mod in context.recently_published_mods %}
+        <div class="card mod-card m-3">
+            {% if mod.feature_img_url %}
+                <img src="{{ mod.feature_img_url }}" class="card-img-top" alt="Placeholder Image" width="300" height="200">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title text-capitalize">{{ mod.title }}</h4>
+                <h5>By: {{ mod.username }}</h5>
+                <a class="btn btn-outline-primary" href="/mod/{{ mod.id }}">View Download</a>
+            </div>
+            <div class="card-footer text-muted">
+                Created: {{ mod.updated | stime }}
+            </div>            
+        </div>
+    {% endfor %}
+    {% if context.recently_published_mods|length == 0 %}
+        No recently published mods
+    {% endif %}
+    </div>
+</section>
+<section class="p-5">
+    <h3>Recently Updated Mods</h3>
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for mod in context.recently_updated_mods %}
+        <div class="card mod-card m-3">
+            {% if mod.feature_img_url %}
+                <img src="{{ mod.feature_img_url }}" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title text-capitalize">{{ mod.title }}</h4>
+                <h5>By: {{ mod.username }}</h5>
+                <a class="btn btn-outline-primary" href="/mod/{{ mod.id }}">View Download</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last Updated: {{ mod.updated | stime }}
+            </div>            
+        </div>
+    {% endfor %}
+    {% if context.recently_updated_mods|length == 0 %}
+        No recently updated mods
+    {% endif %}
+    </div>
+</section>
+<a href="/mods" class="btn btn-success">View All Mods</a>
+
+<section class="p-5">
+    <h3>Newest Tutorials</h3>
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for tut in context.recently_published_tutorials %}
+        <div class="card mod-card m-3">
+            {% if tut.feature_img_url %}
+                <img src="{{ tut.feature_img_url }}" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title text-capitalize">{{ tut.title }}</h4>
+                <h5>By: {{ tut.username }}</h5>
+                <a class="btn btn-outline-primary" href="/tutorial/{{ tut.id }}">View Tutorial</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last Updated: {{ tut.updated | stime }}
+            </div>            
+        </div>
+    {% endfor %}
+    {% if context.recently_published_tutorials|length == 0 %}
+        No recently updated tutorials
+    {% endif %}
+    </div>
+</section>
+
+<a href="/tutorials" class="btn btn-success">View All Tutorials</a>
+{% endblock %}

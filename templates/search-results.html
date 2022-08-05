@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Search Results
+
+{% endblock %}
+
+
+{% block main %}
+
+<section class="p-5 min-vh-100">
+    <h2>Search Results</h2>
+    <hr/>
+    <h3>Mod Results:</h3> 
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for mod in context.mods %}
+        <div class="card mod-card m-3">
+            {% if mod.feature_img_url %}
+                <img src="{{ mod.feature_img_url }}" class="card-img-top" alt="Placeholder Image" width="300" height="200">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title text-capitalize">{{ mod.title }}</h4>
+                <h5>By: {{ mod.username }}</h5>
+                <a class="btn btn-outline-primary" href="/mod/{{ mod.id }}">View Download</a>
+            </div>
+            <div class="card-footer text-muted">
+                Created: {{ mod.updated | stime }}
+            </div>            
+        </div>
+    {% endfor %}
+    {% if context.mods|length == 0 %}
+        No mods found that match: "{{ context.keywords }}"
+    {% endif %}
+    </div>
+    <hr/>
+    <h3>Tutorial Results:</h3> 
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for tutorial in context.tutorials %}
+        <div class="card mod-card m-3">
+            {% if tutorial.feature_img_url %}
+                <img src="{{ tutorial.feature_img_url }}" class="card-img-top" alt="Placeholder Image" width="300" height="200">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title text-capitalize">{{ tutorial.title }}</h4>
+                <h5>By: {{ tutorial.username }}</h5>
+                <a class="btn btn-outline-primary" href="/tutorial/{{ tutorial.id }}">View Tutorial</a>
+            </div>
+            <div class="card-footer text-muted">
+                Created: {{ tutorial.updated | stime }}
+            </div>            
+        </div>
+    {% endfor %}
+    {% if context.tutorials|length == 0 %}
+        No tutorials found that match: "{{ context.keywords }}"
+    {% endif %}
+    </div>
+</section>
+
+{% endblock %}

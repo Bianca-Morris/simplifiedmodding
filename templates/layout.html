@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <!-- Bootstrap http://getbootstrap.com/docs/5.1/ -->
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500&family=Source+Sans+Pro&display=swap" rel="stylesheet"> 
+        <link href="/static/images/favicon.ico" rel="icon">
+        <link href="/static/app.css" rel="stylesheet">
+        <title>SimplifiedModding: {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <!-- Navbar adapted from example here: https://getbootstrap.com/docs/5.2/examples/headers/-->
+        <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-3">
+            <!-- Logo -->
+            <a href="/" class="d-flex align-items-center mb-2 pr-2 mb-lg-0 text-decoration-none">
+              <img src="/static/images/SimplifiedModdingLogo_NoBG.png" width="55" height="55"/>
+              <div class="logo-type">
+                <span class="text-success">Simplified</span><span class="text-primary">Modding</span>
+              </div>
+            </a>
+            <!-- Links -->
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="/" class="nav-link px-2 link-dark">Home</a></li>
+              <li><a href="/about" class="nav-link px-2 link-dark">About</a></li>
+              <li><a href="/mods" class="nav-link px-2 link-dark">Mods</a></li>
+              <li><a href="/tutorials" class="nav-link px-2 link-dark">Tutorials</a></li>
+            </ul>
+            <!-- Search Bar -->
+            <form action="/search" method="POST" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder="Search mods and tutorials..." name="keywords" required>
+                    <button class="btn btn-outline-secondary" type="submit">Go!</button>
+                </div>
+            </form>
+            <!-- Logged In Profile Info-->
+            {% if session["user_id"] %}
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/static/images/avatar.png" alt="avatar" class="rounded-circle" width="32" height="32">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                    <li><a class="dropdown-item" href="/dashboard">My Dashboard</a></li>
+                    <li><a class="dropdown-item" href="/my-profile">My Profile</a></li>
+                    <li><a class="dropdown-item" href="/change-password">Change Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        </nav>
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary mb-0 text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+        <main class="container-fluid py-5 text-center">
+            {% block main %}{% endblock %}
+        </main>
+        <footer class="navbar navbar-dark bg-dark">
+            <li class="nav-item text-light m-2 text-small">
+                &copy; Copyright 2021 Bianca Morris / SimplifiedModding
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light text-decoration-underline" href="/login">Admin Login</a>
+            </li>
+        </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            function onDelete(item_id, base_url) {
+                // DELETE this mod
+                $.ajax({
+                    url : base_url + item_id,
+                    type : 'DELETE',
+                    success: function(res){
+                        result = JSON.parse(res);
+                        
+                        // If this item was deleted successfully, reload
+                        if (result.status == "OK"){
+                            location.reload();
+                        }
+                    },
+                    error: function(error){
+                        // Just logging error for now
+                        console.log(error);
+                    }
+                });
+            }
+
+            function onEdit(item_id, base_url) {
+                console.log("itemID, baseURL", item_id, base_url);
+
+                // Grab the common values for each form input and append to FormData object
+                const formData = new FormData();
+                formData.append("title", $("#title").val());
+                formData.append("feature_img_url", $("#feature_img_url").val());
+                formData.append("is_draft", $('input.form-check-input[name="is_draft"]:checked').val());
+                formData.append("is_private", $('input.form-check-input[name="is_private"]:checked').val());
+
+                // Slightly different fields available on mod versus tutorial...
+                if (base_url === '/mod/edit/') {
+                    formData.append("description", $("#description").val());
+                    formData.append("download_url", $("#download_url").val());
+                } else {
+                    formData.append("tutorial_text", $("#tutorial_text").val());
+                    formData.append("video_embed_url", $("#video_embed_url").val());
+                }
+                
+                // PATCH this new data into the old record
+                $.ajax({
+                    url: base_url + item_id,
+                    type: 'PATCH',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res){
+                        result = JSON.parse(res);
+                        
+                        if (base_url === '/mod/edit/') {
+                            // If this item was updated successfully, view item
+                            if (result.status == "OK") {
+                                location.assign("/mod/" + item_id);
+                            }
+                        } else {
+                            if (result.status == "OK") {
+                                location.assign("/tutorial/" + item_id);
+                            }
+                        }
+                        
+                    },
+                    error: function(error){
+                        // Just logging error for now
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

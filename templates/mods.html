@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Mods
+
+{% endblock %}
+
+
+{% block main %}
+
+<section class="p-5">
+    <h3>All Mods</h3>
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for mod in mods %}
+        <div class="card mod-card m-3">
+            {% if mod.feature_img_url %}
+                <img src="{{ mod.feature_img_url }}" class="card-img-top" alt="Placeholder Image" width="300" height="200">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200.png" class="card-img-top" alt="Placeholder Image"  width="300" height="200">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title text-capitalize">{{ mod.title }}</h4>
+                <h5>By: {{ mod.username }}</h5>
+                <a class="btn btn-outline-primary" href="/mod/{{ mod.id }}">View Download</a>
+            </div>
+            <div class="card-footer text-muted">
+                Created: {{ mod.updated | stime }}
+            </div>            
+        </div>
+    {% endfor %}
+    {% if mods|length == 0 %}
+        No mods available! Check back soon!
+    {% endif %}
+    </div>
+</section>
+
+{% endblock %}

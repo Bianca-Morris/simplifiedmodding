@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Mod
+
+{% endblock %}
+
+
+{% block main %}
+    <h2>Mod Information Page</h2>
+    <hr/>
+    {% if mod %}
+        <div class="row m-5 min-vh-100">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <h3>{{ mod.title }}</h3>
+                    <h4>Created by: {{ mod.username }}</h4>
+                </div>
+                <div class="mb-3 card">
+                    <div class="card-body">
+                        {{ mod.description }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                {% if mod.feature_img_url %}
+                    <img src="{{ mod.feature_img_url }}" class="img-fluid mb-3" />
+                {% endif %}
+                <div class="mb-3">
+                    {% if mod.updated != mod.published %}
+                        <strong>Updated:</strong> {{ mod.updated | stime }}
+                        </br>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <strong>Published:</strong> {{ mod.published | stime }}
+                </div>
+                <a class="btn btn-success" href="{{ mod.download_url }}" target="_blank">Download</a>
+                {% if mod.mod_author == session["user_id"] %}
+                    <a class="btn btn-primary" href="/mod/edit/{{ mod.id }}" target="_blank">Edit</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

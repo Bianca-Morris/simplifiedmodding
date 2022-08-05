@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Edit Tutorial
+
+{% endblock %}
+
+
+{% block main %}
+<h2>Edit Tutorial</h2>
+<div class="row m-5">
+    <div class="col-md-8">
+        <div class="mb-3">
+          <input autocomplete="off" autofocus class="form-control mx-auto w-100" id="title" name="title" placeholder="Tutorial Title (required)" type="text" value="{{ context.tutorial.title }}" required>
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control mx-auto w-100" id="tutorial_text" name="tutorial_text" placeholder="Tutorial Text (required)" rows="12" required>{{ context.tutorial.tutorial_text }}</textarea>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <!-- URL regex from this stackoverflow post: https://stackoverflow.com/questions/58070841/pattern-in-html5-input-type-url-validation-->
+      <div class="mb-3">
+          <input class="form-control mx-auto w-auto" id="video_embed_url" name="video_embed_url" placeholder="Video URL" type="url" value="{{ context.tutorial.video_embed_url }}"
+            pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?">
+      </div>
+      <div class="mb-3">
+          <input class="form-control mx-auto w-auto" id="feature_img_url" name="feature_img_url" placeholder="Feature Image URL" type="url" value="{{ context.tutorial.feature_img_url }}"
+            pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?">
+      </div>
+      <div class="mb-3">
+          <div>
+              Save as...
+          </div>
+          {% if context.tutorial.is_draft == 1 %}
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_draft" id="is_draft" value="1" required checked>
+              <label class="form-check-label" for="is_draft">Draft</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_draft" id="is_not_draft" value="0" required>
+              <label class="form-check-label" for="is_not_draft">Published</label>
+            </div>
+          {% else %}
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_draft" id="is_draft" value="1" required>
+              <label class="form-check-label" for="is_draft">Draft</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_draft" id="is_not_draft" value="0" required checked>
+              <label class="form-check-label" for="is_not_draft">Published</label>
+            </div>
+          {% endif %}
+      </div>
+      <div class="mb-3">
+          <div>
+              Visibility...
+          </div>
+          {% if context.tutorial.is_private == 1 %}
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_private" id="is_private" value="1" required checked>
+              <label class="form-check-label" for="is_private">Private</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_private" id="is_not_private" value="0" required>
+              <label class="form-check-label" for="is_not_private">Public</label>
+          </div>
+          {% else %}
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_private" id="is_private" value="1" required>
+              <label class="form-check-label" for="is_private">Private</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="is_private" id="is_not_private" value="0" required checked>
+              <label class="form-check-label" for="is_not_private">Public</label>
+            </div>
+          {% endif %}
+      </div>
+      <button class="btn btn-primary" type="button" onclick="onEdit('{{ context.tutorial_id }}', '/tutorial/edit/')">Update Tutorial</button>
+    </div>
+</div>
+    
+{% endblock %}

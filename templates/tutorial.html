@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+
+    Tutorial
+
+{% endblock %}
+
+
+{% block main %}
+    <h2>Tutorial Information Page</h2>
+    <hr/>
+    {% if tutorial %}
+        <div class="row m-5 min-vh-100">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <h3>{{ tutorial.title }}</h3>
+                    <h4>Created by: {{ tutorial.username }}</h4>
+                </div>
+                <div class="mb-3 card">
+                    <div class="card-body">
+                        {{ tutorial.tutorial_text }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                {% if tutorial.feature_img_url %}
+                    <img src="{{ tutorial.feature_img_url }}" class="img-fluid mb-3" />
+                {% endif %}
+                {% if tutorial.video_embed_url %}
+                    <iframe width="300" height="200" src="{{ tutorial.video_embed_url }}"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                {% endif %}
+                <div class="mb-3">
+                    {% if tutorial.updated != tutorial.published %}
+                        <strong>Updated:</strong> {{ tutorial.updated | stime }}
+                        </br>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <strong>Published:</strong> {{ tutorial.published | stime }}
+                </div>
+                {% if tutorial.tutorial_author == session["user_id"] %}
+                    <a class="btn btn-primary" href="/tutorial/edit/{{ tutorial.id }}" target="_blank">Edit</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
