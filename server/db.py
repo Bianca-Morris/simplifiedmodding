@@ -5,7 +5,7 @@ import os
 # db = SQL("sqlite:///cs50Final.db")
 
 # Configure CS50 Library to use Heroku Postgres
-uri = os.getenv("DATABASE_URI")
+uri = os.getenv("DATABASE_URL")
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://")
 db = SQL(uri)
