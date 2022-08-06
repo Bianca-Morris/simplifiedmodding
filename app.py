@@ -33,4 +33,4 @@ app.register_blueprint(app_routes)
 # Add a custom jinja filter for handling unix dates
 @app.template_filter('stime')
 def timestime(s):
-    return datetime.fromtimestamp(s).strftime('%m/%d/%y %H:%S')
+    return datetime.fromtimestamp(s).strftime('%m/%d/%y %-I:%M %p')
