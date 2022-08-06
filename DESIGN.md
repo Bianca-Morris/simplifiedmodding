@@ -7,6 +7,8 @@ One of the things that bothered me the most in our PSET 9 work was the way every
 
 You'll see that instead of having a single long file with many routes, I have a pretty barebones `app.py` and several more specific files in the routes folder. These should be pretty self-explanatory: if it relates to authentication, it'll be in `auth.py`; if it's database-specific, it'll be in `db.py`; if it's a standard website route, it'll be in `routes.py`; and if it's not really of the above, I've dumped it into `helpers.py`.
 
+There were a few potential ways to implement this. First, I tried to just use simple import statements, but I ran into a lot of issues with that approach. Then, I learned about Flask's Blueprints system, which worked pretty seamlessly. The final implementation uses both together.
+
 
 ## Secret
 As described in the README, there is a single environment variable required for the current implementation of the application. This application, in it's current state, is not meant to be used by anyone other than admin users with permission to create, edit, and destroy posts. The secret key seemed like an easy way for the administrator to configure an additional layer of security while building the application, that could then be used to restrict access to other users by sharing that data outside of the application through secure means.
