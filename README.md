@@ -58,7 +58,9 @@ To get a local copy up and running follow the following steps:
    flask run
    ```
 5. Run the app with Flask
+   ```
    Open http://127.0.0.1:5000 in browser to view
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
