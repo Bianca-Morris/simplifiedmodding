@@ -207,10 +207,6 @@ def mod_edit(mod_id):
         is_private = request.form.get("is_private")
         is_draft = request.form.get("is_draft")
 
-        print("heloooo", sys.stdout)
-        print(title, sys.stdout)
-        print(description, sys.stdout)
-
         # Check for title
         if not title:
             return handle_error("must provide mod title", 403)
@@ -335,8 +331,6 @@ def getUserProfile():
 
     # Pull the user's profile information from the database
     user = db.execute("SELECT * FROM users WHERE id = ?", user_id)
-    
-    print(user, sys.stdout)    
 
     # Couldn't find it -- user doesn't exist or may be unauthorized to view
     if len(user) == 0:
@@ -421,10 +415,6 @@ def tutorial_edit(tutorial_id):
         feature_img_url = request.form.get("feature_img_url") or ""
         is_private = request.form.get("is_private")
         is_draft = request.form.get("is_draft")
-
-        print("heloooo", sys.stdout)
-        print(title, sys.stdout)
-        print(tutorial_text, sys.stdout)
 
         # Check for title
         if not title:
