@@ -3,6 +3,8 @@
 # SimplifiedModding
 
 This is a small Flask site for posting and sharing Sims 4 mods and tutorials.
+By Bianca Morris (ALM in Digital Media Design Candidate at HES)
+For CS50 Intensive Intro to CS @HSS
 
 [View Demo Video](https://youtu.be/DPaD06I8zgs)
 
