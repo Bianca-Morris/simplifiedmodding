@@ -13,17 +13,17 @@ body {
      }
 }
 
+.about-blurb {
+    margin: 0 auto;
+    max-width: 550px;
+}
+
 .logo-type {
     font-family: 'Red Hat Display', sans-serif;
 }
 
 .mod-card {
     width: 300px;
-}
-
-.about-blurb {
-    margin: 0 auto;
-    max-width: 550px;
 }
 
 .whitespace-break {
