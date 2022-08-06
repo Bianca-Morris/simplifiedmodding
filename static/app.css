@@ -1,3 +1,18 @@
+body {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+  
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
 .logo-type {
     font-family: 'Red Hat Display', sans-serif;
 }
@@ -9,4 +24,8 @@
 .about-blurb {
     margin: 0 auto;
     max-width: 550px;
+}
+
+.whitespace-break {
+    white-space: break-spaces;
 }
