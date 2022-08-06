@@ -118,6 +118,10 @@ def register():
         elif request.form.get("confirmation") != request.form.get("password"):
             return handle_error("passwords must match", 400)
 
+        # Ensure user passed in the correct secret
+        elif request.form.get("secret") != os.getenv("ADMIN_SECRET"):
+            return handle_error("secret must be correct", 400)
+
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
