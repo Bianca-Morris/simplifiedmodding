@@ -23,7 +23,7 @@ I'm still trying to figure out what the best way to implement this would be, so 
 
 
 ## Images and Videos
-Because the content of the site is generated dynamically, by users, and so much of it is visual, the question of what to do about multimedia content came up pretty early. Hooking up a remote image hosting service like AWS s3 or something would be way too complicated given that we had a little over a week to produce a full implementation. So, instead, I built the application to use user-supplied URLs that are then fed into the `<img>` and `<video>` tags used throughout the application.
+Because the content of the site is generated dynamically, by users, and so much of it is visual, the question of what to do about multimedia content came up pretty early. Hooking up a remote image hosting service like AWS s3 or something would be way too complicated given that we had a little over a week to produce a full implementation, and I have never done that before. So, instead, I built the application to use user-supplied URLs that are then fed into the `<img>` and `<video>` tags used throughout the application.
 
 That being said, I understand that this implementation is highly flawed from a security perspective without additional sanitization of user input. I did some small amount of validation via regex on the client-side to prevent admins from submitting non-link files, but additional validation (to check file type, etc.) on the server side would be ideal for improved security in the next stages of this project's implementation.
 
