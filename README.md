@@ -4,8 +4,6 @@
 
 This is a small Flask site for posting and sharing Sims 4 mods and tutorials.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DPaD06I8zgs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 [View Demo Video](https://youtu.be/DPaD06I8zgs)
 
 
@@ -21,8 +19,8 @@ Especially as modding becomes a potentially lucrative creative endeavor, I think
 ### Built With
 
 * Python and Flask
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* Bootstrap
+* JavaScript and jQuery
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
