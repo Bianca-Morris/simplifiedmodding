@@ -3,13 +3,18 @@
 
 {% block title %}
 
-    Error!
+    Error
 
 {% endblock %}
 
 
 {% block main %}
 
-    Something went wrong...
+<div class="min-vh-100">
+    <h2>Oh No! Something went wrong...</h2>
+    <h3>{{ code }} Error</h3>
+    <hr/>
+    <h4>{{ message }}</h4>
+</div>
 
 {% endblock %}
